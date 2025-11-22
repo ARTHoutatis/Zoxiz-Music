@@ -19,248 +19,64 @@
 
       html,
       body {
-        height: 100%;
-      }
-
-      body {
         margin: 0;
         min-height: 100vh;
-        background: #ffffff;
-        color: #050505;
+        height: 100%;
+        background: #101010;
+        color: #f5f5f5;
         font-family: "Anonymous Pro", monospace;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        transition: background 1s ease, color 1s ease;
+        overflow-x: hidden;
       }
 
-      body.transition-complete {
-        overflow: auto;
+      .mobile-warning {
+        display: none;
+        position: fixed;
+        inset: 0;
         background: #050505;
         color: #f5f5f5;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem;
+        z-index: 5000;
       }
 
-      body.hero-transition-active {
-        overflow: hidden;
-        animation: bodyFadeToBlack 1.3s forwards;
+      .mobile-warning__content {
+        max-width: 320px;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .mobile-warning__title {
+        font-family: "VT323", "Anonymous Pro", monospace;
+        font-size: 2rem;
+        letter-spacing: 0.15em;
+        margin: 0;
+        text-transform: uppercase;
+      }
+
+      .mobile-warning__text {
+        margin: 0;
+        line-height: 1.4;
+        font-size: 1rem;
+      }
+
+      @media (max-width: 640px) {
+        body > *:not(.mobile-warning) {
+          visibility: hidden;
+        }
+
+        .mobile-warning {
+          display: flex;
+        }
       }
 
       .hero {
-        min-height: 100vh;
-        height: 100vh;
-        background: #ffffff;
+        min-height: 110vh;
+        background: #050505 url("assets/images/zoxiz-menu.webp") center/cover no-repeat;
         position: relative;
         overflow: hidden;
-        transition: background 1.2s ease;
-      }
-
-      .hero.is-transitioning {
-        animation: heroFadeToBlack 1.1s forwards;
-      }
-
-      .hero-overlay {
-        position: absolute;
-        left: 0;
-        width: 100%;
-        height: auto;
-        pointer-events: none;
-        z-index: 3;
-        object-fit: contain;
-        filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.55));
-        display: block;
-      }
-
-      .hero-overlay--top {
-        top: 0;
-      }
-
-      .hero-overlay--bottom {
-        bottom: -20px;
-        transform: none;
-      }
-
-      .hero-title-overlay {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: clamp(420px, 95vw, 1800px);
-        height: auto;
-        pointer-events: none;
-        z-index: 4;
-        filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.65));
-        transform: translate(-50%, -50%);
-        opacity: 1;
-      }
-
-      .hero.is-transitioning .hero-overlay--top {
-        animation: tearTopExit 1.2s ease forwards;
-      }
-
-      .hero.is-transitioning .hero-overlay--bottom {
-        animation: tearBottomExit 1.2s ease forwards;
-      }
-
-      .hero.is-transitioning .hero-title-overlay {
-        animation: heroTitleBlast 1.3s ease forwards;
-      }
-
-      .hero.is-transitioning .disc {
-        animation: discFadeOut 0.45s ease forwards;
-      }
-
-      .hero.is-transitioning .disc-explosion {
-        opacity: 1;
-      }
-
-      .hero.is-transitioning .disc-shard--1 {
-        animation: shardFlyA 1.1s ease-out forwards;
-      }
-
-      .hero.is-transitioning .disc-shard--2 {
-        animation: shardFlyB 1.1s ease-out forwards 0.05s;
-      }
-
-      .hero.is-transitioning .disc-shard--3 {
-        animation: shardFlyC 1.1s ease-out forwards 0.08s;
-      }
-
-      .hero.is-transitioning .disc-shard--4 {
-        animation: shardFlyD 1.1s ease-out forwards 0.12s;
-      }
-
-      .disc-explosion {
-        position: absolute;
-        top: 50%;
-        left: clamp(1.5rem, 6vw, 7rem);
-        width: clamp(360px, 58vw, 840px);
-        height: clamp(360px, 58vw, 840px);
-        transform: translateY(-50%);
-        pointer-events: none;
-        z-index: 5;
-        opacity: 0;
-      }
-
-      .disc-shard {
-        position: absolute;
-        width: 40%;
-        height: 40%;
-        background-image: url("assets/images/disque-zoxiz-blood.webp");
-        background-size: cover;
-        background-position: center;
-        filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.6));
-        opacity: 0;
-      }
-
-      .disc-shard--1 {
-        top: 0;
-        left: 0;
-        clip-path: polygon(0 0, 100% 0, 60% 100%, 0 100%);
-      }
-
-      .disc-shard--2 {
-        top: 10%;
-        right: 0;
-        clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%);
-      }
-
-      .disc-shard--3 {
-        bottom: 0;
-        left: 5%;
-        clip-path: polygon(0 0, 90% 0, 100% 100%, 20% 100%);
-      }
-
-      .disc-shard--4 {
-        bottom: 5%;
-        right: 5%;
-        clip-path: polygon(0 0, 100% 0, 80% 100%, 0 90%);
-      }
-
-      @keyframes tearTopExit {
-        to {
-          transform: translateY(-120%);
-          opacity: 0;
-        }
-      }
-
-      @keyframes tearBottomExit {
-        to {
-          transform: translateY(120%);
-          opacity: 0;
-        }
-      }
-
-      @keyframes heroTitleBlast {
-        0% {
-          transform: translate(-50%, -50%) scale(1);
-          opacity: 1;
-        }
-        100% {
-          transform: translate(-50%, -60%) scale(1.6);
-          opacity: 0;
-        }
-      }
-
-      @keyframes discFadeOut {
-        to {
-          transform: scale(0.85) rotate(-18deg);
-          opacity: 0;
-        }
-      }
-
-      @keyframes shardFlyA {
-        0% {
-          transform: translate(0, 0) rotate(0deg) scale(0.6);
-          opacity: 0;
-        }
-        15% {
-          opacity: 1;
-        }
-        100% {
-          transform: translate(-220px, -180px) rotate(-35deg) scale(0.9);
-          opacity: 0;
-        }
-      }
-
-      @keyframes shardFlyB {
-        0% {
-          transform: translate(0, 0) rotate(0deg) scale(0.6);
-          opacity: 0;
-        }
-        15% {
-          opacity: 1;
-        }
-        100% {
-          transform: translate(240px, -140px) rotate(28deg) scale(1);
-          opacity: 0;
-        }
-      }
-
-      @keyframes shardFlyC {
-        0% {
-          transform: translate(0, 0) rotate(0deg) scale(0.6);
-          opacity: 0;
-        }
-        20% {
-          opacity: 1;
-        }
-        100% {
-          transform: translate(-180px, 160px) rotate(18deg) scale(0.95);
-          opacity: 0;
-        }
-      }
-
-      @keyframes shardFlyD {
-        0% {
-          transform: translate(0, 0) rotate(0deg) scale(0.6);
-          opacity: 0;
-        }
-        20% {
-          opacity: 1;
-        }
-        100% {
-          transform: translate(200px, 180px) rotate(-22deg) scale(1);
-          opacity: 0;
-        }
       }
 
       .afterglow {
@@ -283,11 +99,12 @@
       }
 
       .platforms-grid {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 1.5rem;
-        margin: 2rem 0 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+        gap: clamp(0.75rem, 2vw, 1.5rem);
+        max-width: 540px;
+        width: 100%;
+        align-items: center;
       }
 
       .platforms-grid a {
@@ -442,14 +259,13 @@
         }
       }
 
-
       .primary-nav {
         position: fixed;
         top: clamp(1rem, 3vh, 2.75rem);
         right: clamp(1rem, 4vw, 3rem);
         display: flex;
         gap: clamp(0.5rem, 1.2vw, 1rem);
-        z-index: 30;
+        z-index: 20;
         pointer-events: auto;
         transition: opacity 0.3s ease, transform 0.3s ease;
       }
@@ -690,6 +506,7 @@
         display: flex;
         flex-direction: column;
         gap: 0.6rem;
+        height: 100%;
       }
 
       .video-title {
@@ -725,6 +542,248 @@
         color: rgba(255, 255, 255, 0.65);
       }
 
+      .video-cta {
+        margin-top: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.35rem;
+      }
+
+      .discography-section {
+        width: min(1200px, 96vw);
+        margin: clamp(2.5rem, 7vh, 5rem) auto;
+        background: radial-gradient(circle at top, rgba(0, 173, 255, 0.12), transparent 55%),
+          linear-gradient(130deg, rgba(8, 8, 8, 0.9), rgba(6, 2, 15, 0.85));
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 22px;
+        padding: clamp(1rem, 3.5vw, 3rem);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .discography-header {
+        text-align: center;
+        margin-bottom: clamp(1.5rem, 4vh, 2.6rem);
+      }
+
+      .discography-heading {
+        font-family: "VT323", "Anonymous Pro", monospace;
+        font-size: clamp(2rem, 5vw, 3.4rem);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        margin: 0 0 0.5rem 0;
+      }
+
+      .discography-subtitle {
+        margin: 0;
+        font-size: clamp(0.95rem, 2.3vw, 1.2rem);
+        letter-spacing: 0.1em;
+        color: rgba(255, 255, 255, 0.75);
+      }
+
+      .section-nuance {
+        position: relative;
+        overflow: hidden;
+        z-index: 0;
+      }
+
+      .section-nuance::after,
+      .section-nuance::before {
+        content: "";
+        position: absolute;
+        inset: -25%;
+        pointer-events: none;
+        opacity: 0;
+        mix-blend-mode: screen;
+        animation: nuanceGlow 22s ease-in-out infinite;
+        z-index: -1;
+      }
+
+      .section-nuance::after {
+        background: radial-gradient(circle at 25% 30%, rgba(255, 0, 204, 0.18), transparent 55%),
+          radial-gradient(circle at 70% 65%, rgba(0, 255, 213, 0.12), transparent 50%),
+          radial-gradient(circle at 45% 80%, rgba(0, 173, 255, 0.15), transparent 55%);
+        filter: blur(6px);
+      }
+
+      .section-nuance::before {
+        background: conic-gradient(from 120deg, rgba(255, 255, 255, 0.1), rgba(255, 0, 153, 0.15), rgba(0, 204, 255, 0.08), rgba(255, 255, 255, 0.05));
+        filter: blur(18px) saturate(1.2);
+        animation-delay: 6s;
+      }
+
+      .section-nuance:nth-of-type(odd)::after {
+        animation-delay: 4s;
+      }
+
+      @keyframes nuanceGlow {
+        0% {
+          opacity: 0;
+          transform: scale(0.85) translate(-4%, -4%);
+        }
+        25% {
+          opacity: 0.45;
+          transform: scale(1) translate(2%, -3%);
+        }
+        50% {
+          opacity: 0.25;
+          transform: scale(1.1) translate(3%, 2%);
+        }
+        75% {
+          opacity: 0.5;
+          transform: scale(0.95) translate(-2%, 3%);
+        }
+        100% {
+          opacity: 0;
+          transform: scale(0.85) translate(-4%, -4%);
+        }
+      }
+
+      .discography-grid {
+        display: grid;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        gap: clamp(0.45rem, 1.2vw, 1rem);
+      }
+
+      @media (min-width: 640px) {
+        .discography-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (min-width: 1100px) {
+        .discography-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      .discography-card {
+        background: rgba(10, 10, 10, 0.82);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        padding: clamp(0.6rem, 2vw, 1.1rem);
+        display: flex;
+        flex-direction: column;
+        gap: 0.65rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .discography-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(120deg, rgba(0, 255, 213, 0.08), transparent 55%);
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        pointer-events: none;
+      }
+
+      .discography-card:hover::after {
+        opacity: 1;
+      }
+
+      .discography-card__meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.85rem;
+        letter-spacing: 0.08em;
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      .discography-card__title {
+        margin: 0;
+        font-size: clamp(1.1rem, 2.4vw, 1.4rem);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        min-height: 3.2em;
+        display: flex;
+        align-items: flex-start;
+      }
+
+      .discography-card__media {
+        position: relative;
+        border-radius: 14px;
+        overflow: hidden;
+        aspect-ratio: 1 / 1;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.05);
+        margin: 0;
+      }
+
+      .discography-card__cover {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .discography-card__label {
+        position: absolute;
+        left: 0.8rem;
+        bottom: 0.8rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        background: rgba(5, 5, 5, 0.78);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+      }
+
+      .discography-card__label img {
+        width: 70%;
+        height: 70%;
+        object-fit: contain;
+        filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.4));
+      }
+
+      .discography-card__info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .discography-card__artists {
+        margin: 0;
+        font-size: 0.85rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .discography-card__platforms {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+
+      .discography-platform {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.05);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+      }
+
+      .discography-platform:hover {
+        transform: translateY(-2px);
+        opacity: 0.85;
+      }
+
+      .discography-platform img {
+        width: 26px;
+        height: 26px;
+        object-fit: contain;
+        filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+      }
+
       .album-announcement {
         margin: clamp(1.8rem, 6.5vh, 3.6rem) auto;
         width: min(1350px, 99vw);
@@ -735,19 +794,15 @@
           linear-gradient(145deg, rgba(12, 0, 0, 0.9), rgba(10, 0, 20, 0.85));
         box-shadow: 0 26px 75px rgba(0, 0, 0, 0.55);
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: clamp(0.55rem, 1.8vw, 2rem);
-        flex-wrap: nowrap;
+        flex-direction: column;
+        gap: clamp(0.55rem, 1.8vw, 1.4rem);
       }
 
       .album-announcement__text {
-        flex: 1 1 360px;
-        text-align: left;
+        text-align: center;
         display: flex;
         flex-direction: column;
         gap: 0.6rem;
-        justify-content: center;
       }
 
       .album-announcement__title {
@@ -776,13 +831,11 @@
 
       .album-announcement__visual {
         position: relative;
-        flex: 0 0 clamp(320px, 32vw, 480px);
-        max-width: 480px;
-        margin-left: auto;
-        width: 100%;
+        align-self: center;
+        width: min(460px, 85vw);
         aspect-ratio: 1 / 1;
         transition: transform 0.25s ease;
-        transform: translateX(-4%);
+        transform: translateX(-8%);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -831,21 +884,20 @@
         opacity: 1;
       }
 
-      @media (max-width: 640px) {
+      @media (min-width: 768px) {
         .album-announcement {
-          flex-direction: column;
+          flex-direction: row;
           align-items: center;
-          flex-wrap: nowrap;
+          justify-content: space-between;
         }
 
         .album-announcement__text {
-          text-align: center;
-          justify-content: flex-start;
+          text-align: left;
+          max-width: 480px;
         }
 
         .album-announcement__visual {
-          margin: 0 auto;
-          transform: none;
+          width: min(420px, 38vw);
         }
       }
 
@@ -1066,13 +1118,14 @@
         }
       }
 
+      
+
       .hero .disc-wrapper {
         position: absolute;
         top: 50%;
         left: clamp(1.5rem, 6vw, 7rem);
         transform: translateY(-50%);
         pointer-events: none;
-        z-index: 6;
       }
 
       .disc {
@@ -1090,53 +1143,11 @@
       main {
         position: relative;
         z-index: 0;
-        flex: 1;
-        height: 100%;
-        overflow: hidden;
       }
 
-      main > section:not(.hero) {
+      main > section {
         position: relative;
         z-index: 0;
-      }
-
-      body.content-locked main > section:not(.hero) {
-        display: none;
-      }
-
-      body.transition-complete main > section:not(.hero) {
-        display: block;
-        animation: sectionFadeIn 0.9s ease forwards;
-        opacity: 0;
-      }
-
-      body.transition-complete main {
-        height: auto;
-        min-height: 100vh;
-        overflow: visible;
-      }
-
-      body.transition-complete main > section:not(.hero):nth-of-type(2) {
-        animation-delay: 0.1s;
-      }
-
-      body.transition-complete main > section:not(.hero):nth-of-type(3) {
-        animation-delay: 0.25s;
-      }
-
-      body.transition-complete main > section:not(.hero):nth-of-type(4) {
-        animation-delay: 0.4s;
-      }
-
-      @keyframes sectionFadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(30px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
       }
 
       .section-decal {
@@ -1391,22 +1402,25 @@
       }
     </style>
   </head>
-  <body class="content-locked">
+  <body>
+    <div class="mobile-warning">
+      <div class="mobile-warning__content">
+        <h1 class="mobile-warning__title">Non compatible</h1>
+        <p class="mobile-warning__text">
+          Ce site est optimisé pour un affichage sur ordinateur. Merci de visiter depuis un écran plus large pour profiter pleinement de l'expérience.
+        </p>
+      </div>
+    </div>
     <nav class="primary-nav" aria-label="Navigation principale">
       <a class="primary-nav__link" href="#home">Home</a>
       <a class="primary-nav__link" href="#merch">Merch</a>
       <a class="primary-nav__link" href="#tour">Tour</a>
       <a class="primary-nav__link" href="#videos">Videos</a>
+      <a class="primary-nav__link" href="#discographie">Discographie</a>
     </nav>
 
     <main>
       <section class="hero" id="home">
-        <img
-          class="hero-overlay hero-overlay--top"
-          src="assets/images/dechi%20haut.webp"
-          alt="Décor déchirure supérieure"
-          aria-hidden="true"
-        />
         <div class="disc-wrapper">
           <img
             src="assets/images/disque-zoxiz-blood.webp"
@@ -1414,27 +1428,9 @@
             class="disc"
           />
         </div>
-        <div class="disc-explosion" aria-hidden="true">
-          <div class="disc-shard disc-shard--1"></div>
-          <div class="disc-shard disc-shard--2"></div>
-          <div class="disc-shard disc-shard--3"></div>
-          <div class="disc-shard disc-shard--4"></div>
-        </div>
-        <img
-          class="hero-title-overlay"
-          src="assets/images/Texte%20zoxiz.webp"
-          alt="Logo texte Zoxiz"
-          aria-hidden="true"
-        />
-        <img
-          class="hero-overlay hero-overlay--bottom"
-          src="assets/images/dechi%20bas.webp"
-          alt="Décor déchirure inférieure"
-          aria-hidden="true"
-        />
       </section>
 
-      <section class="afterglow" aria-labelledby="platforms-title">
+      <section class="afterglow section-nuance" aria-labelledby="platforms-title">
         <h2 class="platforms-title" id="platforms-title">
           Zoxiz Disponible sur toutes les plateformes
         </h2>
@@ -1480,7 +1476,7 @@
         </div>
       </section>
 
-      <section class="merch-section" id="merch">
+      <section class="merch-section section-nuance" id="merch">
         <h2 class="merch-title">Merch</h2>
         <div class="merch-grid">
           <article class="merch-card">
@@ -1526,6 +1522,7 @@
               href="https://my-store-106e6ad.creator-spring.com/listing/zoxiz-liam-devenir-vieux?product=387&amp;variation=103460"
               target="_blank"
               rel="noopener"
+            
             >
               <span>Acheter</span>
             </a>
@@ -1534,15 +1531,15 @@
           <article class="merch-card">
             <div class="merch-image-wrapper">
               <img
-                src="assets/images/merch/clipsou casc.webp"
+                src="assets/images/merch/shirtzoxizlogo2000noir.jpg"
                 alt="Casquette Clipsou Studio"
                 loading="lazy"
               />
             </div>
-            <h3 class="merch-title-card">Casquette Clipsou Studio</h3>
+            <h3 class="merch-title-card">Zoxiz Technologique Logo 2000</h3>
             <a
               class="merch-button"
-              href="https://my-store-106e6ad.creator-spring.com/listing/cap-clipsou-studio?product=2171&amp;variation=106054"
+              href="https://my-store-106e6ad.creator-spring.com/listing/zoxiz-technologique-logo-shirt?product=373&amp;variation=100035"
               target="_blank"
               rel="noopener"
             >
@@ -1553,15 +1550,15 @@
           <article class="merch-card">
             <div class="merch-image-wrapper">
               <img
-                src="assets/images/merch/minecraftzoxizskin.jpg"
-                alt="Sweat Skin Zoxiz Roxxor"
+                src="assets/images/merch/pendantiflogozoxiz2000.webp"
+                alt="Pendantif ZOXIZ 2000 logo"
                 loading="lazy"
               />
             </div>
-            <h3 class="merch-title-card">Sweat Skin Zoxiz Roxxor</h3>
+            <h3 class="merch-title-card">Pendantif ZOXIZ 2000 logo</h3>
             <a
               class="merch-button"
-              href="https://my-store-106e6ad.creator-spring.com/listing/mr-roxxor-urbanos-skin-proport?product=378&amp;variation=100076"
+              href="https://my-store-106e6ad.creator-spring.com/listing/pendantif-zoxiz-2000-logo?product=2183&amp;variation=106195"
               target="_blank"
               rel="noopener"
             >
@@ -1571,7 +1568,7 @@
         </div>
       </section>
 
-      <section class="tour-section" id="tour" aria-labelledby="tour-heading">
+      <section class="tour-section section-nuance" id="tour" aria-labelledby="tour-heading">
         <h2 class="tour-heading" id="tour-heading">Tour</h2>
         <img
           class="section-decal section-decal--tour"
@@ -1651,7 +1648,7 @@
         </ul>
       </section>
 
-      <section class="video-section" id="videos" aria-labelledby="video-heading">
+      <section class="video-section section-nuance" id="videos" aria-labelledby="video-heading">
         <h2 class="video-heading" id="video-heading">Videos</h2>
         <img
           class="section-decal section-decal--videos"
@@ -1669,15 +1666,17 @@
             />
             <div class="video-body">
               <h3 class="video-title">Zoxiz Reignier 2025</h3>
-              <a
-                class="video-button"
-                href="https://youtube.com/shorts/dd5jDLl8KEI?si=ITKK8T-0YdYi8TDo"
-                target="_blank"
-                rel="noopener"
-              >
-                Regarder
-              </a>
-              <span class="video-date">2025</span>
+              <div class="video-cta">
+                <a
+                  class="video-button"
+                  href="https://youtube.com/shorts/dd5jDLl8KEI?si=ITKK8T-0YdYi8TDo"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  Regarder
+                </a>
+                <span class="video-date">2025</span>
+              </div>
             </div>
           </article>
 
@@ -1690,15 +1689,17 @@
             />
             <div class="video-body">
               <h3 class="video-title">Zoxiz concert Experience aix les bain ARTS ET SPECTACLE live</h3>
-              <a
-                class="video-button"
-                href="https://youtu.be/thcjK5hWaLE?si=hETyTzlLUt7-7M_w"
-                target="_blank"
-                rel="noopener"
-              >
-                Regarder
-              </a>
-              <span class="video-date">15/07/2022</span>
+              <div class="video-cta">
+                <a
+                  class="video-button"
+                  href="https://youtu.be/thcjK5hWaLE?si=hETyTzlLUt7-7M_w"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  Regarder
+                </a>
+                <span class="video-date">15/07/2022</span>
+              </div>
             </div>
           </article>
 
@@ -1711,15 +1712,17 @@
             />
             <div class="video-body">
               <h3 class="video-title">Citrouille ( clip officiel )</h3>
-              <a
-                class="video-button"
-                href="https://youtu.be/Hn5SSulMjY4?si=AjlpsqMKxq21fXvC"
-                target="_blank"
-                rel="noopener"
-              >
-                Regarder
-              </a>
-              <span class="video-date">2024</span>
+              <div class="video-cta">
+                <a
+                  class="video-button"
+                  href="https://youtu.be/Hn5SSulMjY4?si=AjlpsqMKxq21fXvC"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  Regarder
+                </a>
+                <span class="video-date">2024</span>
+              </div>
             </div>
           </article>
 
@@ -1732,15 +1735,17 @@
             />
             <div class="video-body">
               <h3 class="video-title">Zoxiz - Number one ( clip officiel )</h3>
-              <a
-                class="video-button"
-                href="https://youtu.be/FIRCPXripKU?si=gT28TrMF2Otc5t1K"
-                target="_blank"
-                rel="noopener"
-              >
-                Regarder
-              </a>
-              <span class="video-date">2021</span>
+              <div class="video-cta">
+                <a
+                  class="video-button"
+                  href="https://youtu.be/FIRCPXripKU?si=gT28TrMF2Otc5t1K"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  Regarder
+                </a>
+                <span class="video-date">2021</span>
+              </div>
             </div>
           </article>
 
@@ -1753,15 +1758,17 @@
             />
             <div class="video-body">
               <h3 class="video-title">zoxiz liam - fait moi confiance feat. kunthea [ AMV ]</h3>
-              <a
-                class="video-button"
-                href="https://youtu.be/AkmBGxVKTRo?si=Q4dX8-iAZRXYz6Os"
-                target="_blank"
-                rel="noopener"
-              >
-                Regarder
-              </a>
-              <span class="video-date">2022</span>
+              <div class="video-cta">
+                <a
+                  class="video-button"
+                  href="https://youtu.be/AkmBGxVKTRo?si=Q4dX8-iAZRXYz6Os"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  Regarder
+                </a>
+                <span class="video-date">2022</span>
+              </div>
             </div>
           </article>
 
@@ -1774,15 +1781,17 @@
             />
             <div class="video-body">
               <h3 class="video-title">Zoxiz Number one ( karaoke version )</h3>
-              <a
-                class="video-button"
-                href="https://youtu.be/G3kQLpqEfoE?si=IFIgJSy8IVHZZEQv"
-                target="_blank"
-                rel="noopener"
-              >
-                Regarder
-              </a>
-              <span class="video-date">2022</span>
+              <div class="video-cta">
+                <a
+                  class="video-button"
+                  href="https://youtu.be/G3kQLpqEfoE?si=IFIgJSy8IVHZZEQv"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  Regarder
+                </a>
+                <span class="video-date">2022</span>
+              </div>
             </div>
           </article>
 
@@ -1795,15 +1804,17 @@
             />
             <div class="video-body">
               <h3 class="video-title">zoxiz - esprit terrifiant ( clip officiel )</h3>
-              <a
-                class="video-button"
-                href="https://youtu.be/4O1WPqeD4jU?si=p-ZDljsb-yHHvDUj"
-                target="_blank"
-                rel="noopener"
-              >
-                Regarder
-              </a>
-              <span class="video-date">2023</span>
+              <div class="video-cta">
+                <a
+                  class="video-button"
+                  href="https://youtu.be/4O1WPqeD4jU?si=p-ZDljsb-yHHvDUj"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  Regarder
+                </a>
+                <span class="video-date">2023</span>
+              </div>
             </div>
           </article>
 
@@ -1816,21 +1827,262 @@
             />
             <div class="video-body">
               <h3 class="video-title">zoxiz - l'univers ( clip officiel )</h3>
-              <a
-                class="video-button"
-                href="https://youtu.be/0Yq-2dbdc98?si=a6eqrEmBYtxZJlvk"
-                target="_blank"
-                rel="noopener"
-              >
-                Regarder
-              </a>
-              <span class="video-date">2021</span>
+              <div class="video-cta">
+                <a
+                  class="video-button"
+                  href="https://youtu.be/0Yq-2dbdc98?si=a6eqrEmBYtxZJlvk"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  Regarder
+                </a>
+                <span class="video-date">2021</span>
+              </div>
             </div>
           </article>
         </div>
       </section>
 
-      <section class="album-announcement" aria-label="Annonce album Blood Pop Church">
+      <section class="discography-section section-nuance" id="discographie" aria-labelledby="discography-heading">
+        <header class="discography-header">
+          <h2 class="discography-heading" id="discography-heading">Discographie</h2>
+        </header>
+        <div class="discography-grid">
+          <article class="discography-card">
+            <figure class="discography-card__media">
+              <img
+                class="discography-card__cover"
+                src="assets/images/discographie/51uv6YPgGDL._UX358_FMwebp_QL85_.webp"
+                alt="Couverture de l'EP Dedoublement"
+                loading="lazy"
+              />
+              <div class="discography-card__label">
+                <img src="assets/images/discographie/CLIPSOUMUSICLOGO.webp" alt="Logo Clipsou Music" loading="lazy" />
+              </div>
+            </figure>
+            <div class="discography-card__info">
+              <div class="discography-card__meta">
+                <span>13/07/2025</span>
+                <span>5 titres</span>
+              </div>
+              <h3 class="discography-card__title">Dedoublement (Bande originale du film)</h3>
+              <p class="discography-card__artists">Artistes figurant : Zoxiz feat. Raiback</p>
+              <div class="discography-card__platforms">
+                <a
+                  class="discography-platform"
+                  href="https://link.deezer.com/s/31FYzYFyVehLsiZNWYmtw"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img src="assets/images/streaming/deezerlogo.webp" alt="Deezer" loading="lazy" />
+                </a>
+                <a
+                  class="discography-platform"
+                  href="https://open.spotify.com/intl-fr/album/5qwpCBLsWEqRzqUFnBdz2o?si=uEXDpGuqS1mfx90BaR5YAA"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img src="assets/images/streaming/spotifylogo.webp" alt="Spotify" loading="lazy" />
+                </a>
+                <a
+                  class="discography-platform"
+                  href="https://amazon.fr/music/player/albums/B0FHJ78C8F?marketplaceId=A13V1IB3VIYZZH&musicTerritory=FR&ref=dm_sh_9eqVbPKh1rIjNOXfEsytBFpfA"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img src="assets/images/discographie/amazonmusiclogo.webp" alt="Amazon Music" loading="lazy" />
+                </a>
+                <a
+                  class="discography-platform"
+                  href="https://music.apple.com/fr/album/dedoublement-bande-originale-du-film-ep/1826693974"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img src="assets/images/streaming/applemusic.webp" alt="Apple Music" loading="lazy" />
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="discography-card">
+            <figure class="discography-card__media">
+              <img
+                class="discography-card__cover"
+                src="assets/images/discographie/howtobesadcover.webp"
+                alt="Couverture de l'album How To Be Sad"
+                loading="lazy"
+              />
+              <div class="discography-card__label">
+                <img src="assets/images/discographie/CLIPSOUMUSICLOGO.webp" alt="Logo Clipsou Music" loading="lazy" />
+              </div>
+            </figure>
+            <div class="discography-card__info">
+              <div class="discography-card__meta">
+                <span>10/11/2024</span>
+                <span>12 titres</span>
+              </div>
+              <h3 class="discography-card__title">How To Be Sad</h3>
+              <p class="discography-card__artists">Artistes figurant : Zoxiz feat. Ferris</p>
+              <div class="discography-card__platforms">
+                <a class="discography-platform" href="https://link.deezer.com/s/31FYJCBVIinCKbdBzA0Y8" target="_blank" rel="noopener">
+                  <img src="assets/images/streaming/deezerlogo.webp" alt="Deezer" loading="lazy" />
+                </a>
+                <a
+                  class="discography-platform"
+                  href="https://open.spotify.com/intl-fr/album/3GUsi2Woo93gfULFIsbXOs?si=y5vsnh40QGe-Wu9Lr-uDeg"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img src="assets/images/streaming/spotifylogo.webp" alt="Spotify" loading="lazy" />
+                </a>
+                <a
+                  class="discography-platform"
+                  href="https://amazon.fr/music/player/albums/B0F2ZJ661L?marketplaceId=A13V1IB3VIYZZH&musicTerritory=FR&ref=dm_sh_dhVoUVeNvMiMKEFifLCwuQJ6r"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img src="assets/images/discographie/amazonmusiclogo.webp" alt="Amazon Music" loading="lazy" />
+                </a>
+                <a class="discography-platform" href="https://music.apple.com/fr/album/how-to-be-sad-ep/1805385962" target="_blank" rel="noopener">
+                  <img src="assets/images/streaming/applemusic.webp" alt="Apple Music" loading="lazy" />
+                </a>
+                <a class="discography-platform" href="https://soundcloud.com/yt_straille25/sets/how-to-be-sad?si=c19a58c5551b449ba940dd07edec7c2b&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" target="_blank" rel="noopener">
+                  <img src="assets/images/streaming/soundcloud.webp" alt="SoundCloud" loading="lazy" />
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="discography-card">
+            <figure class="discography-card__media">
+              <img
+                class="discography-card__cover"
+                src="assets/images/discographie/leroicover.webp"
+                alt="Couverture de l'album Le Roi est mort ce soir"
+                loading="lazy"
+              />
+              <div class="discography-card__label">
+                <img src="assets/images/discographie/CLIPSOUMUSICLOGO.webp" alt="Logo Clipsou Music" loading="lazy" />
+              </div>
+            </figure>
+            <div class="discography-card__info">
+              <div class="discography-card__meta">
+                <span>06/06/2024</span>
+                <span>10 titres</span>
+              </div>
+              <h3 class="discography-card__title">Le Roi est mort ce soir</h3>
+              <p class="discography-card__artists">Artistes figurant : Zoxiz feat. Mati, Blender Chorus</p>
+              <div class="discography-card__platforms">
+                <a class="discography-platform" href="https://link.deezer.com/s/31FYPJiZlVA5ZiGqZbIyQ" target="_blank" rel="noopener">
+                  <img src="assets/images/streaming/deezerlogo.webp" alt="Deezer" loading="lazy" />
+                </a>
+                <a
+                  class="discography-platform"
+                  href="https://open.spotify.com/intl-fr/album/09H9hES4CkbjnX55mmbPMx?si=-YDbmUrLQRC2dlYC6rduVA"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img src="assets/images/streaming/spotifylogo.webp" alt="Spotify" loading="lazy" />
+                </a>
+                <a
+                  class="discography-platform"
+                  href="https://amazon.fr/music/player/albums/B0FDX43T1J?marketplaceId=A13V1IB3VIYZZH&musicTerritory=FR&ref=dm_sh_lOx5TJJIC46haivNDCTaTsMkV"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img src="assets/images/discographie/amazonmusiclogo.webp" alt="Amazon Music" loading="lazy" />
+                </a>
+                <a class="discography-platform" href="https://soundcloud.com/yt_straille25/sets/le-roi-est-mort-ce-soir?si=ccb2e45f5007410d952e49212c376057&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" target="_blank" rel="noopener">
+                  <img src="assets/images/streaming/soundcloud.webp" alt="SoundCloud" loading="lazy" />
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="discography-card">
+            <figure class="discography-card__media">
+              <img
+                class="discography-card__cover"
+                src="assets/images/discographie/stereocover.webp"
+                alt="Couverture de l'EP Stereo"
+                loading="lazy"
+              />
+              <div class="discography-card__label">
+                <img src="assets/images/discographie/CLIPSOUMUSICLOGO.webp" alt="Logo Clipsou Music" loading="lazy" />
+              </div>
+            </figure>
+            <div class="discography-card__info">
+              <div class="discography-card__meta">
+                <span>29/04/2024</span>
+                <span>3 titres</span>
+              </div>
+              <h3 class="discography-card__title">Stereo</h3>
+              <p class="discography-card__artists">Artistes figurant : Zoxiz (aucun feat)</p>
+              <div class="discography-card__platforms">
+                <a class="discography-platform" href="https://soundcloud.com/yt_straille25/sets/stereo?si=d2e38e5a6b6a4343a8ea86c1b3d3f4de&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" target="_blank" rel="noopener">
+                  <img src="assets/images/streaming/soundcloud.webp" alt="SoundCloud" loading="lazy" />
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="discography-card">
+            <figure class="discography-card__media">
+              <img
+                class="discography-card__cover"
+                src="assets/images/discographie/lereveurcover.webp"
+                alt="Couverture de l'album Le Rêveur"
+                loading="lazy"
+              />
+              <div class="discography-card__label">
+                <img src="assets/images/discographie/TIMEMUSICLOGO.webp" alt="Logo Time Music" loading="lazy" />
+              </div>
+            </figure>
+            <div class="discography-card__info">
+              <div class="discography-card__meta">
+                <span>27/11/2022</span>
+                <span>10 titres</span>
+              </div>
+              <h3 class="discography-card__title">Le Rêveur</h3>
+              <p class="discography-card__artists">Artistes figurant : Zoxiz feat. Carotide, Lisarose36</p>
+              <div class="discography-card__platforms">
+                <a class="discography-platform" href="https://soundcloud.com/yt_straille25/sets/le-reveur?si=372c764e03da4758be7188a101ca9602&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" target="_blank" rel="noopener">
+                  <img src="assets/images/streaming/soundcloud.webp" alt="SoundCloud" loading="lazy" />
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="discography-card">
+            <figure class="discography-card__media">
+              <img
+                class="discography-card__cover"
+                src="assets/images/discographie/universalcover2020.webp"
+                alt="Couverture de l'album Universal"
+                loading="lazy"
+              />
+              <div class="discography-card__label">
+                <img src="assets/images/discographie/TIMEMUSICLOGO.webp" alt="Logo Time Music" loading="lazy" />
+              </div>
+            </figure>
+            <div class="discography-card__info">
+              <div class="discography-card__meta">
+                <span>17/08/2020</span>
+                <span>12 titres</span>
+              </div>
+              <h3 class="discography-card__title">Universal</h3>
+              <p class="discography-card__artists">Artistes figurant : Zoxiz feat. Lify</p>
+              <div class="discography-card__platforms">
+                <a class="discography-platform" href="https://soundcloud.com/yt_straille25/sets/universal?si=8391689d5d7d40bc9af0152a28c37d36&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" target="_blank" rel="noopener">
+                  <img src="assets/images/streaming/soundcloud.webp" alt="SoundCloud" loading="lazy" />
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="album-announcement section-nuance" aria-label="Annonce album Blood Pop Church">
         <div class="album-announcement__text">
           <h2 class="album-announcement__title">Blood Pop Church</h2>
           <p class="album-announcement__subtitle">6ème album</p>
@@ -1857,7 +2109,7 @@
         </figure>
       </section>
 
-      <section class="social-section" id="socials" aria-labelledby="socials-title">
+      <section class="social-section section-nuance" id="socials" aria-labelledby="socials-title">
         <h2 class="social-section__title" id="socials-title">Réseaux Sociaux</h2>
         <div class="social-grid">
           <article class="social-card social-card--instagram">
@@ -1914,230 +2166,118 @@
 
     <script>
       (() => {
-        if ("scrollRestoration" in history) {
-          history.scrollRestoration = "manual";
-        }
-
-        const jumpToTop = () => {
-          window.scrollTo(0, 0);
-        };
-
-        window.addEventListener("load", jumpToTop, { once: true });
-        window.addEventListener("beforeunload", jumpToTop);
-      })();
-
-      (() => {
-        const body = document.body;
-        const hero = document.querySelector(".hero");
-        if (!hero) return;
-
-        const TRANSITION_DURATION = 1700;
-        let isTriggered = false;
-        let touchStartY = null;
-
-        const scrollToContent = () => {
-          const mainSections = document.querySelectorAll("main > section");
-          const nextSection = mainSections.length > 1 ? mainSections[1] : null;
-          const targetOffset = nextSection ? nextSection.offsetTop : hero.offsetHeight;
-          window.scrollTo({ top: targetOffset, behavior: "smooth" });
-        };
-
-        const finishTransition = () => {
-          body.classList.remove("content-locked", "hero-transition-active");
-          body.classList.add("transition-complete");
-          hero.classList.remove("is-transitioning");
-          detachListeners();
-          isTriggered = false;
-          window.setTimeout(scrollToContent, 50);
-        };
-
-        const startTransition = () => {
-          if (isTriggered || body.classList.contains("transition-complete")) return;
-          isTriggered = true;
-          body.classList.add("hero-transition-active");
-          hero.classList.add("is-transitioning");
-          window.setTimeout(finishTransition, TRANSITION_DURATION);
-        };
-
-        const wheelHandler = (event) => {
-          if (body.classList.contains("transition-complete")) {
-            detachListeners();
-            return;
-          }
-          if (event.deltaY > 10) {
-            event.preventDefault();
-            startTransition();
-          }
-        };
-
-        const keyHandler = (event) => {
-          if (["ArrowDown", "Space", "PageDown"].includes(event.code)) {
-            event.preventDefault();
-            startTransition();
-          }
-        };
-
-        const touchStartHandler = (event) => {
-          touchStartY = event.touches[0]?.clientY ?? null;
-        };
-
-        const touchMoveHandler = (event) => {
-          if (touchStartY === null) return;
-          const delta = touchStartY - (event.touches[0]?.clientY ?? touchStartY);
-          if (delta > 30) {
-            event.preventDefault();
-            touchStartY = null;
-            startTransition();
-          }
-        };
-
-        const detachListeners = () => {
-          window.removeEventListener("wheel", wheelHandler);
-          window.removeEventListener("keydown", keyHandler);
-          window.removeEventListener("touchstart", touchStartHandler);
-          window.removeEventListener("touchmove", touchMoveHandler);
-        };
-
-        window.addEventListener("wheel", wheelHandler, { passive: false });
-        window.addEventListener("keydown", keyHandler);
-        window.addEventListener("touchstart", touchStartHandler, { passive: true });
-        window.addEventListener("touchmove", touchMoveHandler, { passive: false });
-      })();
-
-      (() => {
         const disc = document.querySelector(".disc");
         if (!disc) return;
 
-        const NORMAL_SPEED = 84; // degrees per second
-        const RESUME_DURATION = 900; // ms
+        const BASE_SPEED = 96; // doubled rotation speed
+        const ACCELERATION = 220; // deg/s^2 for spin-up
+        const DECELERATION = 420; // even faster braking
+        const EPSILON = 0.01;
+        const MIN_ACTIVE_SPEED = 2.5;
+        const STOP_SNAP_THRESHOLD = 0.35;
+        const HOVER_EASING_EXPONENT = 1.2;
+        const FINAL_EASE_WINDOW = 10;
+
         let angle = 0;
+        let currentSpeed = BASE_SPEED;
+        let targetSpeed = BASE_SPEED;
+        let stopTargetAngle = null;
+        let stopStartAngle = 0;
+        let stopTotalAngle = 0;
         let previousTime = null;
         let isHovering = false;
-        let resetting = false;
-        let resuming = false;
-        let resetStartAngle = 0;
-        let resetStartTime = 0;
-        let resetDistance = 0;
-        let resetDuration = 0;
-        let resumeStartTime = 0;
 
         const normalizeAngle = (value) => ((value % 360) + 360) % 360;
+
+        const beginHoverStop = () => {
+          stopStartAngle = angle;
+          const normalized = normalizeAngle(angle);
+          if (normalized === 0) {
+            stopTargetAngle = angle;
+            stopTotalAngle = 0;
+            return;
+          }
+          const completedRotations = angle - normalized;
+          stopTargetAngle = completedRotations + 360;
+          stopTotalAngle = Math.max(stopTargetAngle - stopStartAngle, EPSILON);
+        };
 
         disc.addEventListener("mouseenter", () => {
           if (isHovering) return;
           isHovering = true;
-          resetStartAngle = normalizeAngle(angle);
-          resetStartTime = 0;
-          resetting = true;
-          resetDistance = resetStartAngle === 0 ? 0 : 360 - resetStartAngle;
-          resetDuration = resetDistance === 0 ? 0 : ((2 * resetDistance) / NORMAL_SPEED) * 1000;
+          beginHoverStop();
         });
 
         disc.addEventListener("mouseleave", () => {
+          if (!isHovering) return;
           isHovering = false;
-          resetting = false;
-          resuming = true;
-          resumeStartTime = 0;
-          previousTime = null;
+          stopTargetAngle = null;
+          stopTotalAngle = 0;
+          targetSpeed = BASE_SPEED;
         });
 
-        function tick(timestamp) {
-          if (!previousTime) previousTime = timestamp;
-          const delta = timestamp - previousTime;
+        const updateSpeed = (deltaSeconds) => {
+          if (targetSpeed > currentSpeed) {
+            currentSpeed = Math.min(
+              targetSpeed,
+              currentSpeed + ACCELERATION * deltaSeconds
+            );
+          } else if (targetSpeed < currentSpeed) {
+            currentSpeed = Math.max(
+              targetSpeed,
+              currentSpeed - DECELERATION * deltaSeconds
+            );
+          }
+        };
+
+        const tick = (timestamp) => {
+          if (previousTime === null) previousTime = timestamp;
+          const deltaSeconds = (timestamp - previousTime) / 1000;
           previousTime = timestamp;
 
-          if (resetting) {
-            if (!resetStartTime) resetStartTime = timestamp;
-            const elapsed = timestamp - resetStartTime;
-            const progress = resetDuration === 0 ? 1 : Math.min(elapsed / resetDuration, 1);
-            const kinematicProgress = progress >= 1 ? 1 : 2 * progress - progress * progress;
-            angle = resetStartAngle + resetDistance * kinematicProgress;
-            if (progress >= 1) {
-              resetting = false;
-              angle = 0;
+          updateSpeed(deltaSeconds);
+          angle += currentSpeed * deltaSeconds;
+
+          if (stopTargetAngle !== null) {
+            const remaining = stopTargetAngle - angle;
+
+            if (remaining <= STOP_SNAP_THRESHOLD) {
+              angle = stopTargetAngle;
+              currentSpeed = 0;
+              targetSpeed = isHovering ? 0 : BASE_SPEED;
+              if (!isHovering) {
+                stopTargetAngle = null;
+                stopTotalAngle = 0;
+              }
+            } else if (isHovering && stopTotalAngle > 0) {
+              const clampedProgress = Math.min(
+                Math.max(1 - remaining / stopTotalAngle, 0),
+                1
+              );
+              const eased = 1 - Math.pow(1 - clampedProgress, HOVER_EASING_EXPONENT);
+              const desiredSpeed = Math.max(
+                BASE_SPEED * (1 - eased),
+                MIN_ACTIVE_SPEED
+              );
+              targetSpeed = Math.min(targetSpeed, desiredSpeed);
+
+              if (remaining < FINAL_EASE_WINDOW) {
+                targetSpeed = Math.min(
+                  targetSpeed,
+                  MIN_ACTIVE_SPEED * (remaining / FINAL_EASE_WINDOW)
+                );
+              }
             }
-          } else if (resuming) {
-            if (!resumeStartTime) resumeStartTime = timestamp;
-            const elapsed = timestamp - resumeStartTime;
-            const progress = Math.min(elapsed / RESUME_DURATION, 1);
-            const speedFactor = progress >= 1 ? 1 : progress * (2 - progress);
-            angle += NORMAL_SPEED * speedFactor * (delta / 1000);
-            if (progress >= 1) {
-              resuming = false;
-            }
-          } else if (!isHovering) {
-            angle += NORMAL_SPEED * (delta / 1000);
           }
 
           disc.style.setProperty("--rotation", `${normalizeAngle(angle)}deg`);
           window.requestAnimationFrame(tick);
-        }
+        };
 
         window.requestAnimationFrame(tick);
       })();
 
-      (() => {
-        const bodyEl = document.body;
-        const finePointerQuery = window.matchMedia("(pointer: fine)");
-        if (!finePointerQuery.matches) return;
-
-        const POINTER_SELECTOR = [
-          "a[href]",
-          "button",
-          "[role=button]",
-          "input[type=button]",
-          "input[type=submit]",
-          "input[type=reset]",
-          "summary"
-        ].join(",");
-
-        const updateCursor = (event) => {
-          bodyEl.classList.add("custom-cursor");
-          bodyEl.style.setProperty("--cursor-x", `${event.clientX}px`);
-          bodyEl.style.setProperty("--cursor-y", `${event.clientY}px`);
-        };
-
-        const hideCursor = () => {
-          bodyEl.classList.remove("custom-cursor", "cursor-pointer-mode", "cursor-hidden-cursor");
-          bodyEl.style.setProperty("--cursor-x", "-100px");
-          bodyEl.style.setProperty("--cursor-y", "-100px");
-        };
-
-        const handlePointerTarget = (event) => {
-          const target = event.target instanceof Element ? event.target : null;
-          if (!target) return;
-
-          if (target.closest("button")) {
-            bodyEl.classList.add("cursor-hidden-cursor");
-            bodyEl.classList.remove("cursor-pointer-mode");
-            return;
-          }
-
-          if (target.closest(POINTER_SELECTOR)) {
-            bodyEl.classList.add("cursor-pointer-mode");
-            bodyEl.classList.remove("cursor-hidden-cursor");
-          } else {
-            bodyEl.classList.remove("cursor-pointer-mode", "cursor-hidden-cursor");
-          }
-        };
-
-        const handlePointerLeaveTarget = (event) => {
-          const related = event.relatedTarget instanceof Element ? event.relatedTarget : null;
-
-          if (!related || !related.closest(POINTER_SELECTOR)) {
-            bodyEl.classList.remove("cursor-pointer-mode");
-          }
-
-          if (!related || !related.closest("button")) {
-            bodyEl.classList.remove("cursor-hidden-cursor");
-          }
-        };
-
-        window.addEventListener("pointermove", updateCursor);
-        window.addEventListener("pointerleave", hideCursor);
-        window.addEventListener("pointerover", handlePointerTarget);
-        window.addEventListener("pointerout", handlePointerLeaveTarget);
-      })();
+      
 
       (() => {
         const nav = document.querySelector(".primary-nav");
